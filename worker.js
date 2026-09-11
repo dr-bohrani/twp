@@ -148,17 +148,17 @@ function handleHttpDashboard(request, env, url) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>پروکسی ورکر تلگرام (Cloudflare Worker)</title>
+  <title>TWP - هسته پروکسی ورکر تلگرام</title>
   <style>
     :root {
-      --bg: #0f172a;
-      --card-bg: rgba(30, 41, 59, 0.85);
-      --border: #334155;
-      --accent: #0ea5e9;
-      --accent-hover: #0284c7;
-      --text: #f8fafc;
-      --text-muted: #94a3b8;
-      --success: #10b981;
+      --bg: #000000;
+      --card-bg: #0a0a0a;
+      --card-inner: #000000;
+      --border: #1c1c1c;
+      --accent: #00e5ff;
+      --text: #ffffff;
+      --text-muted: #8e8e93;
+      --success: #00e676;
     }
     * {
       box-sizing: border-box;
@@ -166,8 +166,8 @@ function handleHttpDashboard(request, env, url) {
       padding: 0;
     }
     body {
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-      background: radial-gradient(circle at top, #1e293b, var(--bg));
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
       color: var(--text);
       min-height: 100vh;
       display: flex;
@@ -178,50 +178,51 @@ function handleHttpDashboard(request, env, url) {
     .container {
       background: var(--card-bg);
       border: 1px solid var(--border);
-      backdrop-filter: blur(16px);
       border-radius: 20px;
-      max-width: 640px;
+      max-width: 580px;
       width: 100%;
-      padding: 36px 32px;
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      padding: 36px 30px;
+      box-shadow: 0 0 50px rgba(0, 0, 0, 0.95), 0 0 0 1px rgba(255, 255, 255, 0.04);
     }
     .status-badge {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      background: rgba(16, 185, 129, 0.15);
+      background: #03140a;
       color: var(--success);
       padding: 6px 14px;
       border-radius: 9999px;
       font-size: 13px;
       font-weight: 600;
-      margin-bottom: 20px;
-      border: 1px solid rgba(16, 185, 129, 0.3);
+      margin-bottom: 22px;
+      border: 1px solid rgba(0, 230, 118, 0.25);
     }
     .dot {
       width: 8px;
       height: 8px;
       background: var(--success);
       border-radius: 50%;
-      box-shadow: 0 0 10px var(--success);
+      box-shadow: 0 0 12px var(--success);
     }
     h1 {
       font-size: 24px;
       margin-bottom: 12px;
       font-weight: 700;
+      letter-spacing: -0.5px;
+      color: #ffffff;
     }
     p.desc {
       color: var(--text-muted);
-      font-size: 15px;
-      line-height: 1.6;
-      margin-bottom: 28px;
+      font-size: 14px;
+      line-height: 1.7;
+      margin-bottom: 26px;
     }
     .info-card {
-      background: rgba(15, 23, 42, 0.6);
+      background: var(--card-inner);
       border: 1px solid var(--border);
       border-radius: 12px;
-      padding: 16px;
-      margin-bottom: 24px;
+      padding: 16px 18px;
+      margin-bottom: 18px;
       text-align: left;
       direction: ltr;
       word-break: break-all;
@@ -229,7 +230,7 @@ function handleHttpDashboard(request, env, url) {
     .info-label {
       font-size: 12px;
       color: var(--text-muted);
-      margin-bottom: 6px;
+      margin-bottom: 8px;
       direction: rtl;
       text-align: right;
     }
@@ -239,29 +240,46 @@ function handleHttpDashboard(request, env, url) {
       color: var(--accent);
       user-select: all;
     }
-
-    .steps {
-      margin-top: 32px;
-      border-top: 1px solid var(--border);
-      padding-top: 24px;
+    .meta-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 18px;
     }
-    .steps h2 {
-      font-size: 16px;
-      margin-bottom: 14px;
-      color: var(--text);
+    .meta-box {
+      background: var(--card-inner);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 14px;
     }
-    .steps ol {
-      padding-right: 20px;
+    .meta-title {
+      font-size: 11px;
       color: var(--text-muted);
-      font-size: 14px;
-      line-height: 1.8;
+      margin-bottom: 4px;
     }
-    .steps code {
-      background: rgba(255, 255, 255, 0.1);
-      padding: 2px 6px;
-      border-radius: 4px;
-      color: var(--text);
+    .meta-val {
       font-size: 13px;
+      font-weight: 600;
+      color: #ffffff;
+      font-family: ui-monospace, SFMono-Regular, monospace;
+      direction: ltr;
+      text-align: right;
+    }
+    .footer {
+      margin-top: 26px;
+      padding-top: 18px;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    .footer a {
+      color: var(--accent);
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+    .footer a:hover {
+      opacity: 0.8;
     }
   </style>
 </head>
@@ -271,26 +289,29 @@ function handleHttpDashboard(request, env, url) {
       <span class="dot"></span>
       ورکر کلادفلر فعال و آماده اتصال است
     </div>
-    <h1>پروکسی اختصاصی ورکر تلگرام</h1>
+    <h1>پروکسی اختصاصی ورکر تلگرام (TWP)</h1>
     <p class="desc">
-      این سرور ورکر، ترافیک تلگرام را از طریق شبکه توزیع‌شده Cloudflare به سمت دیتاسنترهای رسمی تلگرام تونل می‌کند تا دسترسی امن و پرسرعت فراهم شود.
+      این سرور ترافیک پروتکل MTProto را از طریق شبکه لبه (Edge) کلادفلر با پروتکل WebSocket به سمت دیتاسنترهای رسمی تلگرام تونل می‌کند.
     </p>
 
-    <div class="info-label">آدرس سرور ورکر شما:</div>
+    <div class="info-label">آدرس سرور ورکر (Server Host):</div>
     <div class="info-card">
       <span class="info-value">https://${host}</span>
     </div>
 
-    <div class="steps">
-      <h2>نحوه تنظیم دستی در تلگرام دسکتاپ:</h2>
-      <ol>
-        <li>وارد <code>Settings</code> (تنظیمات) تلگرام شوید.</li>
-        <li>به بخش <code>Advanced</code> و سپس <code>Connection type</code> بروید.</li>
-        <li>روی <code>Use custom proxy</code> کلیک کرده و گزینه <code>Add proxy</code> را بزنید.</li>
-        <li>نوع پروکسی را روی <b>WORKER</b> قرار دهید.</li>
-        <li>آدرس ورکر را <code>https://${host}</code> وارد نمایید.</li>
-        <li>ذخیره کرده و از اتصال بدون وقفه لذت ببرید!</li>
-      </ol>
+    <div class="meta-grid">
+      <div class="meta-box">
+        <div class="meta-title">پروتکل انتقال</div>
+        <div class="meta-val">WSS (RFC 6455)</div>
+      </div>
+      <div class="meta-box">
+        <div class="meta-title">پورت پیش‌فرض</div>
+        <div class="meta-val">443 (TLS 1.3)</div>
+      </div>
+    </div>
+
+    <div class="footer">
+      توسعه داده شده توسط <a href="https://t.me/Qorvhex_Channel" target="_blank" rel="noopener">Qorvhex</a>
     </div>
   </div>
 </body>
