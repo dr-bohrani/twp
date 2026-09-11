@@ -53,8 +53,4 @@ npx wrangler deploy
 ---
 
 ## تست آنلاین بودن ورکر
-می‌توانید با اسکریپت داخلی پروژه سلامت و پینگ ورکر خود را بسنجید:
-
-```bash
-node scripts/test-worker.js your-worker.workers.dev [secret]
-```
+کافی است آدرس ورکر خود (مثلاً `https://telegram-worker-proxy.your-name.workers.dev`) را در مرورگر باز کنید؛ در صورت صحت عملکرد، داشبورد وضعیت ورکر با پیام «ورکر کلادفلر فعال و آماده اتصال است» نمایش داده می‌شود.

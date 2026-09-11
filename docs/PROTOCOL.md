@@ -4,21 +4,18 @@ The **TWP Protocol** defines how Telegram clients interact with Cloudflare Worke
 
 ---
 
-## 1. URL Scheme: `tg://worker?...`
+## 1. Parameters & Compatibility
 
-Clients support one-click connection and sharing using the custom URL scheme:
+TWP does not enforce a rigid URL format. Client implementations and configurations only need to provide connection parameters that match the inputs expected by [`worker.js`](../worker.js).
 
-### Format
-```text
-tg://worker?server=<worker_hostname>&port=443[&secret=<optional_secret>]
-```
-
-### Query Parameters
+### Core Parameters:
 | Parameter | Required | Default | Description |
 | :--- | :--- | :--- | :--- |
-| `server` | Yes | - | The Cloudflare Worker domain name (e.g., `my-proxy.workers.dev` or custom domain). |
-| `port` | No | `443` | TCP port for HTTPS/WSS (standard is 443). |
+| `workerHost` / `server` | **Yes** | - | The Cloudflare Worker domain name (e.g., `my-proxy.workers.dev` or custom domain). |
+| `clean_ip` / `ip` | No | `149.154.167.50` | Optional Cloudflare Clean IP or CDN domain for bypassing SNI/IP blocks, or Telegram DC target IP. |
+| `port` | No | `443` | Port for HTTPS/WSS and Telegram DC (default is 443). |
 | `secret` | No | Empty | Optional authentication token matching the Worker `SECRET` environment variable. |
+
 
 ---
 

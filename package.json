@@ -5,8 +5,7 @@
   "main": "worker.js",
   "scripts": {
     "dev": "wrangler dev",
-    "deploy": "wrangler deploy",
-    "test": "node scripts/test-worker.js"
+    "deploy": "wrangler deploy"
   },
   "keywords": [
     "telegram",
